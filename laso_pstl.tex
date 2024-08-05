@@ -93,8 +93,8 @@ shapes.geometric
 \addbibresource{references.bib}
 
 \title{What You Always Wanted To Know About \langcpp Performance Portability (But Were Afraid to Do)}
-\subtitle{Austrian-Slovenian HPC Meeting 2024 --- ASHPC24}
-\date{June 12, 2024}
+\subtitle{International Conference on Parallel Processing 2024 --- ICPP'24}
+\date{August 13, 2024}
 \author{%
 	Ruben Laso, Diego Krupitza, and Sascha Hunold \\
 	\texttt{\{\href{mailto:laso@par.tuwien.ac.at}{laso}, \href{mailto:krupitza@par.tuwien.ac.at}{krupitza}, \href{mailto:hunold@par.tuwien.ac.at}{hunold}\}@par.tuwien.ac.at}
@@ -236,6 +236,15 @@ shapes.geometric
 	\end{figure}
 \end{frame}
 
+\begin{frame}{Results - HW Counters and Binary Sizes}
+	\begin{columns}
+		\column{0.59\textwidth}
+		\input{tables/hw_counters_foreach_it1.tex}
+		\column{0.41\textwidth}
+		\input{tables/binary_sizes.tex}
+	\end{columns}
+\end{frame}
+
 \begin{frame}{Results - GPUs}
 	\begin{figure}
 		\begin{columns}
@@ -248,21 +257,14 @@ shapes.geometric
 	\end{figure}
 \end{frame}
 
-\section*{Get your hands on it}
+\section*{Get your hands on it!}
 
 \begin{xframe}
-	\begin{columns}[t]
-		\column{0.55\textwidth}
-		\begin{blockitem}{Code and papers}
-			\small
-			\item \pstlbench: \colorref{https://github.com/parlab-tuwien/pSTL-Bench}{github.com/parlab-tuwien/pSTL-Bench}
-			\item arXiv preprint: \colorref{https://arxiv.org/abs/2402.06384}{https://arxiv.org/abs/2402.06384}
-			\item ICPP 2024 paper: incoming
-		\end{blockitem}
-		\column{0.45\textwidth}
-		\par{}
-		\fbox{\includegraphics[page=1, width=0.85\textwidth, trim=40 50 40 50]{images/pstl_bench_main.pdf}}
-	\end{columns}
+	\begin{figure}
+		\centering
+		\caption*{\color{blue}{\url{https://github.com/parlab-tuwien/pSTL-Bench}}}
+		\includegraphics[width=0.8\textwidth]{images/github-pstl.png}
+	\end{figure}
 \end{xframe}
 
 % Show again the cover title
@@ -282,16 +284,6 @@ shapes.geometric
 
 \begin{xframe}
 	\input{tables/overview_efficiency.tex}
-\end{xframe}
-
-
-\begin{xframe}
-	\begin{columns}
-		\column{0.5\textwidth}
-		\input{tables/hw_counters_foreach_it1.tex}
-		\column{0.5\textwidth}
-		\input{tables/binary_sizes.tex}
-	\end{columns}
 \end{xframe}
 
 
