@@ -1,0 +1,25 @@
+# LaTeX build files
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.bcf
+*.run.xml
+*.vrb
+
+# Temporary files
+*.backup
+*.bak
+*.swp
+*.synctex.gz
+
+# Generated files
+*.dvi
+*.ps
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex(busy)
