@@ -257,6 +257,20 @@ shapes.geometric
 	\end{figure}
 \end{frame}
 
+\section*{Conclusions}
+\begin{frame}{Conclusions}
+	\begin{blockitem}{Your mileage \textit{will} vary}
+		\item \langcpp is rapidly moving towards performance portability with execution policies
+		\begin{itemize}
+			\item Actual implementations are not so rapid
+		\end{itemize}
+		\item \pstlbench is a tool to evaluate the performance of \langcpp STL
+		\item Performance is \emph{heavily} dependent on the compiler and backend
+		\item Algorithms in STL are usually memory-bound $\rightarrow$ Not a huge speedup + careful memory placement
+		\item In GPUs, data transfer is the key $\rightarrow$ keep data in the device
+	\end{blockitem}
+\end{frame}
+
 \section*{Get your hands on it!}
 
 \begin{xframe}
