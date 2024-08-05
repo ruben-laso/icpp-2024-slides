@@ -1,0 +1,284 @@
+\documentclass[border=2pt]{standalone}
+% use sans-serif font by default (like beamer)
+\renewcommand{\familydefault}{\sfdefault}
+% also sans-serif for math
+\usepackage{sansmath}
+\sansmath
+\usepackage{pgfplots}
+\pgfplotsset{
+	compat=newest,
+	% Opacity 0.5 in the legend
+	every axis legend/.append style={
+		fill=white,
+		fill opacity=0.5,
+		text opacity=1,
+		font = \scriptsize,
+	},
+	every axis plot/.append style={
+		fill opacity=1.0,
+	}
+}
+
+% Look for ourmacros-private.sty in the same directory, or the parent
+\makeatletter
+\usepackage{xspace}
+\IfFileExists{ourmacros-private.sty}{ % Then
+	\input{ourmacros-private.sty}
+}{ % Else
+	\IfFileExists{../../../ourmacros-private.sty}{ % Then
+		\input{../../../ourmacros-private.sty}
+	}{ % Else
+% \newcommand{\machhydra}{\emph{Hydra}\xspace}
+% \newcommand{\machnebula}{\emph{Nebula}\xspace}
+% \newcommand{\machvsc}{\mbox{\emph{VSC-5}}\xspace}
+% \newcommand{\machtesla}{\mbox{\emph{Tesla}}\xspace}
+% \newcommand{\machampere}{\mbox{\emph{Ampere}}\xspace}
+% \newcommand{\machhydralong}{\emph{Hydra} (Skylake)\xspace}
+% \newcommand{\machnebulalong}{\emph{Nebula} (Zen~1)\xspace}
+% \newcommand{\machvsclong}{\mbox{\emph{VSC-5} (Zen~3)}\xspace}
+% \newcommand{\machteslalong}{\mbox{\emph{Tesla}}\xspace}
+% \newcommand{\machamperelong}{\mbox{\emph{Ampere}}\xspace}
+
+\newcommand{\machhydra}{\emph{Mach~A}\xspace}
+\newcommand{\machnebula}{\emph{Mach~B}\xspace}
+\newcommand{\machvsc}{\mbox{\emph{Mach~C}}\xspace}
+\newcommand{\machtesla}{\mbox{\emph{Mach~D}}\xspace}
+\newcommand{\machampere}{\mbox{\emph{Mach~E}}\xspace}
+\newcommand{\machhydralong}{\emph{Mach~A} (Skylake)\xspace}
+\newcommand{\machnebulalong}{\emph{Mach~B} (Zen~1)\xspace}
+\newcommand{\machvsclong}{\mbox{\emph{Mach~C}} (Zen~3)\xspace}
+\newcommand{\machteslalong}{\mbox{\emph{Mach~D}} (Tesla)\xspace}
+\newcommand{\machamperelong}{\mbox{\emph{Mach~E}} (Ampere)\xspace}
+}}
+\makeatother
+
+\begin{document}
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,6327.119053093482,0
+16,12592.664022093695,0
+32,25155.398685295528,0
+64,50257.41983335851,0
+128,100520.41143553806,0
+256,201084.253622146,0
+512,401728.8958393095,0
+1024,803850.3249138931,0
+2048,1606973.6394948338,0
+4096,3216859.7064220165,0
+8192,6427460.389908262,0
+16384,12860000.3853211,0
+32768,25707827.81481482,0
+65536,51418981.85185185,0
+131072,102866769.5,0
+262144,205727206.2857143,0
+524288,412013435.0,0
+1048576,822662742.0,0
+2097152,1646167574.0,0
+4194304,3291408772.0,0
+8388608,6583149146.0,0
+16777216,13172526103.0,0
+33554432,26341023573.0,0
+67108864,52673680964.0,0
+134217728,105376414059.0,0
+268435456,210754314182.0,0
+536870912,421493373744.0,0
+1073741824,842805760875.0,0
+}\GCCSEQ
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,16742.943167610993,0
+16,21050.96837719573,0
+32,25550.12519117336,0
+64,30543.44218189714,0
+128,37533.10162185444,0
+256,45908.60760777158,0
+512,41109.13879490898,0
+1024,37786.202007121865,0
+2048,48397.534316428,0
+4096,67602.82647342965,0
+8192,103345.16918875008,0
+16384,173495.0764386267,0
+32768,307534.3628571417,0
+65536,571653.6239350901,0
+131072,1113462.6538158937,0
+262144,2136798.940548781,0
+524288,4174000.543283582,0
+1048576,8236068.905882348,0
+2097152,16327035.73255814,0
+4194304,32374677.37209303,0
+8388608,64214923.40909088,0
+16777216,129832430.27272724,0
+33554432,259797371.60000005,0
+67108864,519415988.66666657,0
+134217728,1036407796.0,0
+268435456,2071516183.0,0
+536870912,4141186287.0,0
+1073741824,8260514534.0,0
+}\GCCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,6337.583280497343,0
+16,12650.701676217794,0
+32,25214.98520202282,0
+64,50370.75846193751,0
+128,101006.5533309338,0
+256,201407.4729007049,0
+512,403082.2173913014,0
+1024,227443.87962466505,0
+2048,280494.7697797715,0
+4096,295401.6433978118,0
+8192,323928.7764122462,0
+16384,416956.98551144585,0
+32768,539238.8939861214,0
+65536,787196.7485939276,0
+131072,1272236.9713774603,0
+262144,2262155.0723472666,0
+524288,4181724.200598799,0
+1048576,8136302.075144509,0
+2097152,15866316.090909088,0
+4194304,31435948.466666665,0
+8388608,62464173.63636365,0
+16777216,124477825.9090909,0
+33554432,248465116.50000003,0
+67108864,496476841.0,0
+134217728,992132207.5,0
+268435456,1984015942.0,0
+536870912,3966739347.0,0
+1073741824,7913398670.0,0
+}\GCCGNU
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,79628.88752743247,0
+16,88128.10676505149,0
+32,136966.89303095118,0
+64,195798.4759977674,0
+128,284061.83093968104,0
+256,436257.5957642728,0
+512,696129.550999999,0
+1024,695204.8803545051,0
+2048,691760.5531189076,0
+4096,657975.125291104,0
+8192,631180.4237288146,0
+16384,653667.9319981363,0
+32768,797273.1531073446,0
+65536,1064442.1465451764,0
+131072,1541310.653421633,0
+262144,2663967.5480769225,0
+524288,5034051.607272727,0
+1048576,9730302.528169025,0
+2097152,19046916.26760563,0
+4194304,40518676.38235295,0
+8388608,79801791.6111111,0
+16777216,157254333.2222222,0
+33554432,312387945.5,0
+67108864,622178403.5,0
+134217728,1244193792.0,0
+268435456,2484510465.0,0
+536870912,4967597356.0,0
+1073741824,9935828987.0,0
+}\GCCHPX
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,17305.702458703785,0
+16,21545.56296192533,0
+32,25703.75990881652,0
+64,30409.55267736757,0
+128,37607.803403001184,0
+256,46134.68494190656,0
+512,56096.06275666847,0
+1024,37489.21808738472,0
+2048,47803.7807353242,0
+4096,66765.96086189662,0
+8192,101640.55425369284,0
+16384,168183.07027027017,0
+32768,294255.4482034038,0
+65536,583167.2188930492,0
+131072,1072195.5590490813,0
+262144,2046965.4525547428,0
+524288,3980127.741477273,0
+1048576,7837968.793296092,0
+2097152,15580777.922222223,0
+4194304,31007747.266666666,0
+8388608,61880348.39130435,0
+16777216,123428372.45454544,0
+33554432,246867520.16666672,0
+67108864,493155265.0,0
+134217728,986537094.0,0
+268435456,1980013863.0,0
+536870912,3949960951.000001,0
+1073741824,7896270493.0,0
+}\ICCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,9517.228443425907,0
+16,10077.9781,0
+32,10224.93140946712,0
+64,10813.014101778164,0
+128,11308.516454334847,0
+256,12044.275727315691,0
+512,13888.543206302702,0
+1024,17554.819972434438,0
+2048,25172.251259976467,0
+4096,40110.98482636189,0
+8192,71301.63411902454,0
+16384,131717.2707021339,0
+32768,252376.47159603267,0
+65536,493654.1064880119,0
+131072,976944.682705718,0
+262144,1941296.862690705,0
+524288,3870358.019337015,0
+1048576,7736264.005524859,0
+2097152,15442622.49450549,0
+4194304,30874527.755555566,0
+8388608,61746402.217391305,0
+16777216,123458292.63636364,0
+33554432,247086733.00000003,0
+67108864,493876233.33333343,0
+134217728,988673780.0,0
+268435456,1975458808.0,0
+536870912,3958416876.000001,0
+1073741824,7910722658.0,0
+}\NVCOMP
+
+% @DATA
+
+\begin{tikzpicture}
+	\begin{axis}[
+			table/col sep=comma,
+			% Dimensions of the plot
+			width=0.75\textwidth,
+			height=0.6\textwidth,
+			% Axis labels
+			xlabel={Problem size (\#elements)},
+			ylabel={Time (ns)},
+			% Logarithmic scale (base 10 for y axis)
+			ymode=log,
+			log basis y=10,
+			% Logarithmic scale (base 2 for x axis)
+			xmode=log,
+			log basis x=2,
+			% Other parameters
+			legend pos=north west,
+			grid=major,
+			grid style=dotted,
+			%
+			title={High computational intensity ($k_\text{it} = 1000$)},
+		]
+
+\addplot+ [color=black, mark options={fill=black!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCSEQ}; \addlegendentry{GCC-SEQ};
+\addplot+ [color=red,  mark options={fill=red!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCTBB}; \addlegendentry{GCC-TBB};
+\addplot+ [color=orange!80!black, mark options={fill=orange!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCGNU}; \addlegendentry{GCC-GNU};
+\addplot+ [color=violet, mark options={fill=violet!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCHPX}; \addlegendentry{GCC-HPX};
+\addplot+ [color=blue, mark options={fill=blue!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\ICCTBB}; \addlegendentry{ICC-TBB};
+\addplot+ [color=green!60!black, mark options={fill=green!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\NVCOMP}; \addlegendentry{NVC-OMP};
+		% @ADDPLOT
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,21 @@
+\begin{table}[t]
+	\centering
+	\caption{Estimated overhead (in ns) of the parallelization when using all threads for the different compilers and backends. \lowerisbetter.}
+	\label{tab:overhead}
+	\begin{tabular}{%
+			l
+			S[table-number-alignment=right, table-auto-round=true, table-format=1]
+			S[table-number-alignment=right, table-auto-round=true, table-format=1]
+			S[table-number-alignment=right, table-auto-round=true, table-format=1]
+		}
+		\toprule
+		backend & {\machhydra} & {\machnebula} & {\machvsc}     \\
+		\midrule
+		GCC-TBB & 4885.48208   & 12339.87091   & 663.46231      \\
+		GCC-GNU & 45213.83663  & 83822.21761   & 11143290.04498 \\
+		GCC-HPX & 48941.28793  & 36158.12552   & 87714.90084    \\
+		ICC-TBB & 4922.67799   & {N/A}         & 680.84578      \\
+		NVC-OMP & 5215.49724   & 9548.95789    & 1417929.76387  \\
+		\bottomrule
+	\end{tabular}
+\end{table}

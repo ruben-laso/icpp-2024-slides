@@ -1,0 +1,281 @@
+\begin{table}[t]
+	\centering
+	\caption{Executed instructions in 100 calls to the function \groupfind on \machhydralong.}
+	\label{tab:find-hw-counters}
+	\begin{adjustbox}{max width=\linewidth}
+	\begin{tabular}{lrrrrr}
+		\toprule
+		\multirow{2}{*}{Metric}                       & GCC   & GCC   & GCC    & ICC   & NVC   \\
+		                                              & TBB   & GNU   & HPX    & TBB   & OMP   \\
+		\midrule
+		Instructions (any)                            & 428G  & 474G  & 2.30T  & 107G  & 1.58T \\
+		FP scalar                                     & 87.8K & 88.8K & 290.9K & 88.0K & 89.1K \\
+		FP 128-bit packed                             & 0     & 0     & 0      & 0     & 0     \\
+		FP 256-bit packed                             & 0     & 0     & 0      & 0     & 0     \\
+		\unit{\giga\FLOP\per\second}                  & N/A   & N/A   & N/A    & N/A   & N/A   \\
+		Mem. bandwidth (\unit{\gibi\byte\per\second}) & 117.4 & 78.1  & 98.0   & 112.4 & 46.9  \\
+		Mem. data volume (\unit{\gibi\byte})          & 888.0 & 961.7 & 830.9  & 895.8 & 687.0 \\
+		\bottomrule
+	\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+% laso@hydra32:~/pSTL-Bench-experimentation$ likwid-perfctr -g MEM_DP -m ./pSTL-Bench_GCC_TBB --benchmark_min_time=100x --benchmark_filter="TBB/.*::find/.*/1073741824"
+
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+% |                     Event                     | Counter |      Sum     |     Min     |     Max     |      Avg     |
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+% |             INSTR_RETIRED_ANY STAT            |  FIXC0  | 428337610000 | 11274030000 | 15119100000 | 1.338555e+10 |
+% |           CPU_CLK_UNHALTED_CORE STAT          |  FIXC1  | 438457860000 | 12441710000 | 14010550000 |  13701808125 |
+% |           CPU_CLK_UNHALTED_REF STAT           |  FIXC2  | 438603110000 | 12447610000 | 14012380000 | 1.370635e+10 |
+% |              PWR_PKG_ENERGY STAT              |   PWR0  |    1662.2390 |           0 |    844.9648 |      51.9450 |
+% |              PWR_DRAM_ENERGY STAT             |   PWR3  |     213.5506 |           0 |    121.8446 |       6.6735 |
+% | FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE STAT |   PMC0  |            0 |           0 |           0 |            0 |
+% |    FP_ARITH_INST_RETIRED_SCALAR_DOUBLE STAT   |   PMC1  |        87817 |        2700 |        3198 |    2744.2812 |
+% | FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE STAT |   PMC2  |            0 |           0 |           0 |            0 |
+% | FP_ARITH_INST_RETIRED_512B_PACKED_DOUBLE STAT |   PMC3  |            0 |           0 |           0 |            0 |
+% |               CAS_COUNT_RD STAT               | MBOX0C0 |   1623409700 |           0 |  1064118000 | 5.073155e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX0C1 |    689628500 |           0 |   450673400 | 2.155089e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX1C0 |   1623422100 |           0 |  1064044000 | 5.073194e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX1C1 |    689068500 |           0 |   450157600 | 2.153339e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX2C0 |   1623193400 |           0 |  1063946000 | 5.072479e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX2C1 |    690978700 |           0 |   451711300 | 2.159308e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX3C0 |   1622833100 |           0 |  1063628000 | 5.071353e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX3C1 |    689037800 |           0 |   450282800 | 2.153243e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX4C0 |   1623047900 |           0 |  1063781000 | 5.072025e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX4C1 |    689499700 |           0 |   450583700 | 2.154687e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX5C0 |   1623015900 |           0 |  1063791000 | 5.071925e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX5C1 |    689155000 |           0 |   450370600 | 2.153609e+07 |
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |                 Metric                 |      Sum     |      Min     |      Max     |      Avg     |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |        Runtime (RDTSC) [s] STAT        |     243.0983 |       7.5549 |       7.6050 |       7.5968 |
+% |        Runtime unhalted [s] STAT       |     209.2813 |       5.9386 |       6.6874 |       6.5400 |
+% |            Clock [MHz] STAT            |   67019.5926 |    2093.3577 |    2094.8616 |    2094.3623 |
+% |                CPI STAT                |      32.9188 |       0.9134 |       1.1321 |       1.0287 |
+% |             Energy [J] STAT            |    1662.2390 |            0 |     844.9648 |      51.9450 |
+% |             Power [W] STAT             |     219.8222 |            0 |     111.6437 |       6.8694 |
+% |          Energy DRAM [J] STAT          |     213.5506 |            0 |     121.8446 |       6.6735 |
+% |           Power DRAM [W] STAT          |      28.2450 |            0 |      16.1280 |       0.8827 |
+% |            DP [MFLOP/s] STAT           |       0.0128 |       0.0004 |       0.0004 |       0.0004 |
+% |          AVX DP [MFLOP/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Packed [MUOPS/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Scalar [MUOPS/s] STAT         |       0.0128 |       0.0004 |       0.0004 |       0.0004 |
+% |  Memory read bandwidth [MBytes/s] STAT |   82451.0833 |            0 |   54075.3231 |    2576.5964 |
+% |  Memory read data volume [GBytes] STAT |     623.2910 |            0 |     408.5317 |      19.4778 |
+% | Memory write bandwidth [MBytes/s] STAT |   35027.4190 |            0 |   22904.6984 |    1094.6068 |
+% | Memory write data volume [GBytes] STAT |     264.7916 |            0 |     173.0419 |       8.2747 |
+% |    Memory bandwidth [MBytes/s] STAT    |  117478.5024 |            0 |   76980.0216 |    3671.2032 |
+% |    Memory data volume [GBytes] STAT    |     888.0826 |            0 |     581.5736 |      27.7526 |
+% |       Operational intensity STAT       | 2.196920e-07 | 4.642577e-09 | 1.043363e-08 | 6.865375e-09 |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+
+% laso@hydra32:~/pSTL-Bench-experimentation$ likwid-perfctr -g MEM_DP -m ./pSTL-Bench_GCC_GNU --benchmark_min_time=100x --benchmark_filter="OMP/.*::find/.*/1073741824"
+
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+% |                     Event                     | Counter |      Sum     |     Min     |     Max     |      Avg     |
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+% |             INSTR_RETIRED_ANY STAT            |  FIXC0  | 474026249000 |  7997802000 | 16589580000 | 1.481332e+10 |
+% |           CPU_CLK_UNHALTED_CORE STAT          |  FIXC1  | 643876590000 | 14922200000 | 20865350000 | 2.012114e+10 |
+% |           CPU_CLK_UNHALTED_REF STAT           |  FIXC2  | 644502720000 | 14936230000 | 20890050000 |  20140710000 |
+% |              PWR_PKG_ENERGY STAT              |   PWR0  |    2629.5170 |           0 |   1404.0550 |      82.1724 |
+% |              PWR_DRAM_ENERGY STAT             |   PWR3  |     288.7759 |           0 |    160.5014 |       9.0242 |
+% | FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE STAT |   PMC0  |            0 |           0 |           0 |            0 |
+% |    FP_ARITH_INST_RETIRED_SCALAR_DOUBLE STAT   |   PMC1  |        88841 |        2700 |        3352 |    2776.2812 |
+% | FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE STAT |   PMC2  |            0 |           0 |           0 |            0 |
+% | FP_ARITH_INST_RETIRED_512B_PACKED_DOUBLE STAT |   PMC3  |            0 |           0 |           0 |            0 |
+% |               CAS_COUNT_RD STAT               | MBOX0C0 |   1911971300 |           0 |  1186689000 | 5.974910e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX0C1 |    660621500 |           0 |   414585700 | 2.064442e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX1C0 |   1912063800 |           0 |  1186828000 | 5.975199e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX1C1 |    660713000 |           0 |   414694500 | 2.064728e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX2C0 |   1911969500 |           0 |  1186770000 | 5.974905e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX2C1 |    660425400 |           0 |   414385300 | 2.063829e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX3C0 |   1777937000 |           0 |  1105381000 | 5.556053e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX3C1 |    658424700 |           0 |   416782400 | 2.057577e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX4C0 |   1778064800 |           0 |  1105407000 |     55564525 |
+% |               CAS_COUNT_WR STAT               | MBOX4C1 |    658429400 |           0 |   416780700 | 2.057592e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX5C0 |   1778081500 |           0 |  1105393000 | 5.556505e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX5C1 |    658248300 |           0 |   416760700 | 2.057026e+07 |
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |                 Metric                 |      Sum     |      Min     |      Max     |      Avg     |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |        Runtime (RDTSC) [s] STAT        |     392.6553 |      12.2479 |      12.3369 |      12.2705 |
+% |        Runtime unhalted [s] STAT       |     307.3300 |       7.1225 |       9.9593 |       9.6041 |
+% |            Clock [MHz] STAT            |   66977.0196 |    2092.3209 |    2093.5916 |    2093.0319 |
+% |                CPI STAT                |      43.9474 |       1.2370 |       1.8658 |       1.3734 |
+% |             Energy [J] STAT            |    2629.5170 |            0 |    1404.0550 |      82.1724 |
+% |             Power [W] STAT             |     213.5613 |            0 |     113.9706 |       6.6738 |
+% |          Energy DRAM [J] STAT          |     288.7759 |            0 |     160.5014 |       9.0242 |
+% |           Power DRAM [W] STAT          |      23.4529 |            0 |      13.0283 |       0.7329 |
+% |            DP [MFLOP/s] STAT           |       0.0067 |       0.0002 |       0.0003 |       0.0002 |
+% |          AVX DP [MFLOP/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Packed [MUOPS/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Scalar [MUOPS/s] STAT         |       0.0067 |       0.0002 |       0.0003 |       0.0002 |
+% |  Memory read bandwidth [MBytes/s] STAT |   57535.1367 |            0 |   35723.5065 |    1797.9730 |
+% |  Memory read data volume [GBytes] STAT |     708.4857 |            0 |     440.0940 |      22.1402 |
+% | Memory write bandwidth [MBytes/s] STAT |   20564.9833 |            0 |   12956.3670 |     642.6557 |
+% | Memory write data volume [GBytes] STAT |     253.2392 |            0 |     159.6153 |       7.9137 |
+% |    Memory bandwidth [MBytes/s] STAT    |   78100.1201 |            0 |   48679.8735 |    2440.6288 |
+% |    Memory data volume [GBytes] STAT    |     961.7248 |            0 |     599.7093 |      30.0539 |
+% |       Operational intensity STAT       | 1.955247e-07 | 4.502182e-09 | 7.673704e-09 | 6.110147e-09 |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+
+% laso@hydra32:~/pSTL-Bench-experimentation$ likwid-perfctr -g MEM_DP -m ./pSTL-Bench_GCC_HPX --benchmark_min_time=100x --benchmark_filter="HPX/.*::find/.*/1073741824"
+
+% +-----------------------------------------------+---------+---------------+-------------+--------------+--------------+
+% |                     Event                     | Counter |      Sum      |     Min     |      Max     |      Avg     |
+% +-----------------------------------------------+---------+---------------+-------------+--------------+--------------+
+% |             INSTR_RETIRED_ANY STAT            |  FIXC0  | 2297587920000 | 30347890000 | 107607700000 |  71799622500 |
+% |           CPU_CLK_UNHALTED_CORE STAT          |  FIXC1  |  875839130000 | 15222050000 |  38447630000 | 2.736997e+10 |
+% |           CPU_CLK_UNHALTED_REF STAT           |  FIXC2  |  875981130000 | 15228530000 |  38450150000 | 2.737441e+10 |
+% |              PWR_PKG_ENERGY STAT              |   PWR0  |     1933.2439 |           0 |    1002.5230 |      60.4139 |
+% |              PWR_DRAM_ENERGY STAT             |   PWR3  |      212.7774 |           0 |     108.6613 |       6.6493 |
+% | FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE STAT |   PMC0  |             0 |           0 |            0 |            0 |
+% |    FP_ARITH_INST_RETIRED_SCALAR_DOUBLE STAT   |   PMC1  |        290956 |        3207 |        17016 |    9092.3750 |
+% | FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE STAT |   PMC2  |             0 |           0 |            0 |            0 |
+% | FP_ARITH_INST_RETIRED_512B_PACKED_DOUBLE STAT |   PMC3  |             0 |           0 |            0 |            0 |
+% |               CAS_COUNT_RD STAT               | MBOX0C0 |    1583986200 |           0 |    813177000 | 4.949957e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX0C1 |     581263600 |           0 |    328345200 | 1.816449e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX1C0 |    1583867200 |           0 |    813187500 |     49495850 |
+% |               CAS_COUNT_WR STAT               | MBOX1C1 |     581145100 |           0 |    328377100 | 1.816078e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX2C0 |    1583806500 |           0 |    813148100 | 4.949395e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX2C1 |     581080600 |           0 |    328319800 | 1.815877e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX3C0 |    1582582400 |           0 |    813306700 |     49455700 |
+% |               CAS_COUNT_WR STAT               | MBOX3C1 |     580174000 |           0 |    328274400 | 1.813044e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX4C0 |    1582428100 |           0 |    813232300 | 4.945088e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX4C1 |     579950100 |           0 |    328155300 | 1.812344e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX5C0 |    1582531900 |           0 |    813188900 | 4.945412e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX5C1 |     580329300 |           0 |    328255100 | 1.813529e+07 |
+% +-----------------------------------------------+---------+---------------+-------------+--------------+--------------+
+
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |                 Metric                 |      Sum     |      Min     |      Max     |      Avg     |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |        Runtime (RDTSC) [s] STAT        |     457.3670 |       8.3147 |      19.9921 |      14.2927 |
+% |        Runtime unhalted [s] STAT       |     418.0622 |       7.2659 |      18.3521 |      13.0644 |
+% |            Clock [MHz] STAT            |   67028.2912 |    2094.1051 |    2094.8928 |    2094.6341 |
+% |                CPI STAT                |      12.5895 |       0.3501 |       0.5016 |       0.3934 |
+% |             Energy [J] STAT            |    1933.2439 |            0 |    1002.5230 |      60.4139 |
+% |             Power [W] STAT             |     228.0241 |            0 |     120.5723 |       7.1258 |
+% |          Energy DRAM [J] STAT          |     212.7774 |            0 |     108.6613 |       6.6493 |
+% |           Power DRAM [W] STAT          |      25.0888 |            0 |      13.0686 |       0.7840 |
+% |            DP [MFLOP/s] STAT           |       0.0191 |       0.0003 |       0.0009 |       0.0006 |
+% |          AVX DP [MFLOP/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Packed [MUOPS/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Scalar [MUOPS/s] STAT         |       0.0191 |       0.0003 |       0.0009 |       0.0006 |
+% |  Memory read bandwidth [MBytes/s] STAT |   71692.5338 |            0 |   37556.5390 |    2240.3917 |
+% |  Memory read data volume [GBytes] STAT |     607.9490 |            0 |     312.2714 |      18.9984 |
+% | Memory write bandwidth [MBytes/s] STAT |   26349.6463 |            0 |   15161.4017 |     823.4264 |
+% | Memory write data volume [GBytes] STAT |     222.9723 |            0 |     126.0625 |       6.9679 |
+% |    Memory bandwidth [MBytes/s] STAT    |   98042.1800 |            0 |   52717.9406 |    3063.8181 |
+% |    Memory data volume [GBytes] STAT    |     830.9213 |            0 |     438.3339 |      25.9663 |
+% |       Operational intensity STAT       | 7.021391e-07 | 7.558165e-09 | 4.313944e-08 | 2.194185e-08 |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+
+% laso@hydra32:~/pSTL-Bench-experimentation$ likwid-perfctr -g MEM_DP -m ./pSTL-Bench_ICC_TBB --benchmark_min_time=100x --benchmark_filter="TBB/.*::find/.*/1073741824"
+
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+% |                     Event                     | Counter |      Sum     |     Min     |     Max     |      Avg     |
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+% |             INSTR_RETIRED_ANY STAT            |  FIXC0  | 107442987000 |  2849916000 |  3781840000 | 3.357593e+09 |
+% |           CPU_CLK_UNHALTED_CORE STAT          |  FIXC1  | 466194080000 | 13399560000 | 14903640000 |  14568565000 |
+% |           CPU_CLK_UNHALTED_REF STAT           |  FIXC2  | 466306240000 | 13403270000 | 14905990000 |  14572070000 |
+% |              PWR_PKG_ENERGY STAT              |   PWR0  |    1771.8506 |           0 |    904.7373 |      55.3703 |
+% |              PWR_DRAM_ENERGY STAT             |   PWR3  |     223.1425 |           0 |    131.4939 |       6.9732 |
+% | FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE STAT |   PMC0  |            0 |           0 |           0 |            0 |
+% |    FP_ARITH_INST_RETIRED_SCALAR_DOUBLE STAT   |   PMC1  |        88010 |        2700 |        3342 |    2750.3125 |
+% | FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE STAT |   PMC2  |            0 |           0 |           0 |            0 |
+% | FP_ARITH_INST_RETIRED_512B_PACKED_DOUBLE STAT |   PMC3  |            0 |           0 |           0 |            0 |
+% |               CAS_COUNT_RD STAT               | MBOX0C0 |   1636364300 |           0 |  1143568000 | 5.113638e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX0C1 |    697200600 |           0 |   499410500 | 2.178752e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX1C0 |   1636316100 |           0 |  1143408000 | 5.113488e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX1C1 |    697363100 |           0 |   499541600 | 2.179260e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX2C0 |   1636453900 |           0 |  1143589000 | 5.113918e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX2C1 |    697861200 |           0 |   499999000 | 2.180816e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX3C0 |   1634940800 |           0 |  1143377000 |     51091900 |
+% |               CAS_COUNT_WR STAT               | MBOX3C1 |    697052500 |           0 |   499581700 | 2.178289e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX4C0 |   1634869000 |           0 |  1143294000 | 5.108966e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX4C1 |    696684800 |           0 |   499197500 |     21771400 |
+% |               CAS_COUNT_RD STAT               | MBOX5C0 |   1634726800 |           0 |  1143181000 | 5.108521e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX5C1 |    696683000 |           0 |   499209000 | 2.177134e+07 |
+% +-----------------------------------------------+---------+--------------+-------------+-------------+--------------+
+
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |                 Metric                 |      Sum     |      Min     |      Max     |      Avg     |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |        Runtime (RDTSC) [s] STAT        |     257.0230 |       7.9634 |       8.0636 |       8.0320 |
+% |        Runtime unhalted [s] STAT       |     222.5214 |       6.3958 |       7.1137 |       6.9538 |
+% |            Clock [MHz] STAT            |   67025.4539 |    2094.0148 |    2094.8229 |    2094.5454 |
+% |                CPI STAT                |     139.6118 |       3.9004 |       4.7798 |       4.3629 |
+% |             Energy [J] STAT            |    1771.8506 |            0 |     904.7373 |      55.3703 |
+% |             Power [W] STAT             |     222.3540 |            0 |     113.4667 |       6.9486 |
+% |          Energy DRAM [J] STAT          |     223.1425 |            0 |     131.4939 |       6.9732 |
+% |           Power DRAM [W] STAT          |      28.0063 |            0 |      16.5123 |       0.8752 |
+% |            DP [MFLOP/s] STAT           |       0.0100 |       0.0003 |       0.0004 |       0.0003 |
+% |          AVX DP [MFLOP/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Packed [MUOPS/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Scalar [MUOPS/s] STAT         |       0.0100 |       0.0003 |       0.0004 |       0.0003 |
+% |  Memory read bandwidth [MBytes/s] STAT |   78839.8672 |            0 |   55135.5882 |    2463.7458 |
+% |  Memory read data volume [GBytes] STAT |     628.0749 |            0 |     439.0667 |      19.6273 |
+% | Memory write bandwidth [MBytes/s] STAT |   33604.3778 |            0 |   24085.7095 |    1050.1368 |
+% | Memory write data volume [GBytes] STAT |     267.7021 |            0 |     191.8041 |       8.3657 |
+% |    Memory bandwidth [MBytes/s] STAT    |  112444.2450 |            0 |   79221.2977 |    3513.8827 |
+% |    Memory data volume [GBytes] STAT    |     895.7770 |            0 |     630.8708 |      27.9930 |
+% |       Operational intensity STAT       | 2.376310e-07 | 4.279799e-09 | 1.261578e-08 | 7.425968e-09 |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+
+% laso@hydra32:~/pSTL-Bench-experimentation$ likwid-perfctr -g MEM_DP -m ./pSTL-Bench_NVC_OMP --benchmark_min_time=100x --benchmark_filter="OMP/.*::find/.*/1073741824"
+
+% +-----------------------------------------------+---------+---------------+-------------+-------------+--------------+
+% |                     Event                     | Counter |      Sum      |     Min     |     Max     |      Avg     |
+% +-----------------------------------------------+---------+---------------+-------------+-------------+--------------+
+% |             INSTR_RETIRED_ANY STAT            |  FIXC0  | 1582203390000 | 38744350000 | 56247720000 | 4.944386e+10 |
+% |           CPU_CLK_UNHALTED_CORE STAT          |  FIXC1  |  638155640000 | 16232270000 | 21869440000 |  19942363750 |
+% |           CPU_CLK_UNHALTED_REF STAT           |  FIXC2  |  638774870000 | 16249580000 | 21888670000 | 1.996171e+10 |
+% |              PWR_PKG_ENERGY STAT              |   PWR0  |     3171.6380 |           0 |   1690.1420 |      99.1137 |
+% |              PWR_DRAM_ENERGY STAT             |   PWR3  |      279.5131 |           0 |    149.7373 |       8.7348 |
+% | FP_ARITH_INST_RETIRED_128B_PACKED_DOUBLE STAT |   PMC0  |             0 |           0 |           0 |            0 |
+% |    FP_ARITH_INST_RETIRED_SCALAR_DOUBLE STAT   |   PMC1  |         89110 |        2700 |        3598 |    2784.6875 |
+% | FP_ARITH_INST_RETIRED_256B_PACKED_DOUBLE STAT |   PMC2  |             0 |           0 |           0 |            0 |
+% | FP_ARITH_INST_RETIRED_512B_PACKED_DOUBLE STAT |   PMC3  |             0 |           0 |           0 |            0 |
+% |               CAS_COUNT_RD STAT               | MBOX0C0 |    1192724600 |           0 |   707253000 | 3.727264e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX0C1 |     590508100 |           0 |   381965900 | 1.845338e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX1C0 |    1196096200 |           0 |   708268900 | 3.737801e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX1C1 |     594731700 |           0 |   383278100 | 1.858537e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX2C0 |    1201415300 |           0 |   708260900 | 3.754423e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX2C1 |     601154900 |           0 |   383603400 | 1.878609e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX3C0 |    1194829600 |           0 |   708899200 |     37338425 |
+% |               CAS_COUNT_WR STAT               | MBOX3C1 |     594049000 |           0 |   384643200 | 1.856403e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX4C0 |    1192957600 |           0 |   707226400 |     37279925 |
+% |               CAS_COUNT_WR STAT               | MBOX4C1 |     591515800 |           0 |   382494700 | 1.848487e+07 |
+% |               CAS_COUNT_RD STAT               | MBOX5C0 |    1193065000 |           0 |   706410700 | 3.728328e+07 |
+% |               CAS_COUNT_WR STAT               | MBOX5C1 |     591438800 |           0 |   381224400 | 1.848246e+07 |
+% +-----------------------------------------------+---------+---------------+-------------+-------------+--------------+
+
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |                 Metric                 |      Sum     |      Min     |      Max     |      Avg     |
+% +----------------------------------------+--------------+--------------+--------------+--------------+
+% |        Runtime (RDTSC) [s] STAT        |     467.1539 |      14.5699 |      14.6701 |      14.5986 |
+% |        Runtime unhalted [s] STAT       |     304.5996 |       7.7479 |      10.4385 |       9.5187 |
+% |            Clock [MHz] STAT            |   66977.1086 |    2092.3874 |    2093.5739 |    2093.0346 |
+% |                CPI STAT                |      12.9268 |       0.3725 |       0.4195 |       0.4040 |
+% |             Energy [J] STAT            |    3171.6380 |            0 |    1690.1420 |      99.1137 |
+% |             Power [W] STAT             |     216.5647 |            0 |     115.3656 |       6.7676 |
+% |          Energy DRAM [J] STAT          |     279.5131 |            0 |     149.7373 |       8.7348 |
+% |           Power DRAM [W] STAT          |      19.0856 |            0 |      10.2208 |       0.5964 |
+% |            DP [MFLOP/s] STAT           |       0.0064 |       0.0002 |       0.0002 |       0.0002 |
+% |          AVX DP [MFLOP/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Packed [MUOPS/s] STAT         |            0 |            0 |            0 |            0 |
+% |          Scalar [MUOPS/s] STAT         |       0.0064 |       0.0002 |       0.0002 |       0.0002 |
+% |  Memory read bandwidth [MBytes/s] STAT |   31336.4628 |            0 |   18550.0800 |     979.2645 |
+% |  Memory read data volume [GBytes] STAT |     458.9496 |            0 |     271.7644 |      14.3422 |
+% | Memory write bandwidth [MBytes/s] STAT |   15570.8495 |            0 |   10035.3795 |     486.5890 |
+% | Memory write data volume [GBytes] STAT |     228.0575 |            0 |     147.0214 |       7.1268 |
+% |    Memory bandwidth [MBytes/s] STAT    |   46907.3124 |            0 |   28585.4595 |    1465.8535 |
+% |    Memory data volume [GBytes] STAT    |     687.0071 |            0 |     418.7858 |      21.4690 |
+% |       Operational intensity STAT       | 2.706874e-07 | 6.447209e-09 | 1.006631e-08 | 8.458981e-09 |
+% +----------------------------------------+--------------+--------------+--------------+--------------+

@@ -1,0 +1,89 @@
+\documentclass[border=2pt]{standalone}
+
+\usepackage{pgfplots}
+\pgfplotsset{
+	compat=newest,
+	% Opacity 0.5 in the legend
+	every axis legend/.append style={
+		fill=white,
+		fill opacity=0.5,
+		text opacity=1,
+		font = \scriptsize,
+	},
+	every axis plot/.append style={
+		fill opacity=1.0,
+	}
+}
+
+\begin{document}
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1232769984.1666667,0
+}\GCCSEQ
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,2085450193.333333,0
+2,1744059543.75,0
+4,773253086.7777777,0
+8,584233197.153846,0
+16,495507000.50000006,0
+32,413769667.5294118,0
+64,402233013.8235295,0
+}\GCCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1999965613.25,0
+2,1397561931.2,0
+4,1422671537.2000003,0
+8,1390799683.4,0
+16,1238517034.6666667,0
+32,1210516382.1666667,0
+64,1437269638.7500002,0
+}\GCCHPX
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1226668428.5,0
+2,1231633468.6666667,0
+4,1588126393.5,0
+8,1887958705.25,0
+16,1367571305.4,0
+32,1537369074.0,0
+64,1530944000.0,0
+}\NVCOMP
+
+% @DATA
+
+\begin{tikzpicture}
+	\begin{axis}[
+			table/col sep=comma,
+			% Dimensions of the plot
+			width=0.45\textwidth,
+			height=0.33\textwidth,
+			% Axis labels
+			xlabel={\#Threads},
+			ylabel={Time (ns)},
+			% Axis config
+			xtick={1, 2, 4, 8, 16, 32, 64},
+			% Other parameters
+			legend style={at={(0.95,0.5)},anchor=east},
+			%
+			grid=major,
+			grid style=dotted,
+		]
+
+\addplot+ [color=black, mark options={fill=black!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCSEQ}; \addlegendentry{GCC-SEQ};
+\addplot+ [color=red,  mark options={fill=red!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCTBB}; \addlegendentry{GCC-TBB};
+\addplot+ [color=violet, mark options={fill=violet!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCHPX}; \addlegendentry{GCC-HPX};
+\addplot+ [color=green!60!black, mark options={fill=green!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\NVCOMP}; \addlegendentry{NVC-OMP};
+		% @ADDPLOT
+
+		% add horizontal line with no markers (for sequential)
+		\addplot+ [color=black, no marks, dashed] coordinates {(1, 1232769984.1666667) (64, 1232769984.1666667)};
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

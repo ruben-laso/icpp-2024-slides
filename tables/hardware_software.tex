@@ -1,0 +1,31 @@
+\setlength{\tabcolsep}{4pt}
+\begin{center}
+	\begin{adjustbox}{max width=\textwidth, max height=\textheight}
+		\begin{tabular}{lrrrr}
+			\toprule
+			Machine                                                 & \machvsclong                    & \machhydralong                  & \machteslalong            & \machamperelong            \\
+			\midrule
+			CPU/GPU                                                 & \textbf{AMD EPYC 7713}          & \textbf{Intel Xeon 6130F}       & \textbf{\nvidia Tesla T4} & \textbf{\nvidia Ampere A2} \\
+			Architecture                                            & Zen 3                           & Skylake                         & Turing                    & Ampere                     \\
+			% Core frequency                                          & \qty{2.00}{\giga\hertz}         & \qty{2.10}{\giga\hertz}         & \qty{1.11}{\giga\hertz}  & \qty{1.77}{\giga\hertz}  \\
+			Sockets \textbar{} NUMA nodes                           & 2 \textbar{} 8                  & 2 \textbar{} 2                  & 1 \textbar{} 1            & 1 \textbar{} 1             \\
+			Total \#cores \textbar{} threads                        & 128 \textbar{} 256              & 32 \textbar{} 32                & 2560 \textbar{} 2560      & 1280 \textbar{} 1280       \\
+			Max. \#threads used                                     & \textbf{128}                    & \textbf{32}                     & \textbf{2560}             & \textbf{1280}              \\
+			Memory (node / GPU)                                     & \qty{512}{\gibi\byte}           & \qty{48}{\gibi\byte}            & \qty{16}{\gibi\byte}      & \qty{8}{\gibi\byte}        \\
+			Memory (per core)                                       & \qty{4}{\gibi\byte}             & \qty{1.5}{\gibi\byte}           & —                         & —                          \\
+			% \midrule
+			% Compilers                                               & \gppvsc                         & \gpphydra                       & \gpptesla                & \gppampere               \\
+			%                                                         & \nvhpcvsc                       & \nvhpchydra                     & \nvhpctesla              & \nvhpcampere             \\
+			%                                                         & \icpxvsc                        & \icpxhydra                      &                          &                          \\
+			% \midrule
+			% Libraries                                               & \tbbvsc                         & \tbbhydra                       & \cudatesla               & \cudaampere              \\
+			%                                                         & \hpxvsc                         & \hpxhydra                       &                          &                          \\
+			%                                                         & \gompvsc                        & \gomphydra                      &                          &                          \\
+			%                                                         & \nvompvsc                       & \nvomphydra                     &                          &                          \\
+			\midrule
+			STREAM BW                                               & \num{42.6} \textbar{} \num{249} & \num{11.7} \textbar{} \num{135} & N/A \textbar{} \num{264}  & N/A \textbar{} \num{172}   \\
+			1 \textbar{} all~core(s) (\unit{\giga\byte\per\second}) &                                 &                                 &                           &                            \\
+			\bottomrule
+		\end{tabular}
+	\end{adjustbox}
+\end{center}

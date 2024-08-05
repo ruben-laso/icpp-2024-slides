@@ -1,0 +1,127 @@
+\documentclass[border=2pt]{standalone}
+
+\usepackage{pgfplots}
+\pgfplotsset{
+	compat=newest,
+	% Opacity 0.5 in the legend
+	every axis legend/.append style={
+		fill=white,
+		fill opacity=0.5,
+		text opacity=1,
+		font = \scriptsize,
+	},
+	every axis plot/.append style={
+		fill opacity=1.0,
+	}
+}
+
+\begin{document}
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1.0,0
+}\GCCSEQ
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,0.6318203872131982,0
+2,1.0552190906319732,0
+4,1.618552322060539,0
+8,2.340584434124933,0
+16,3.7319215373272074,0
+32,4.482241242578523,0
+64,4.5057283934773675,0
+128,4.681468593002567,0
+}\GCCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,0.6599925442032496,0
+2,0.26956894352413907,0
+4,0.6233769959412004,0
+8,1.0284018114949427,0
+16,1.5628158422215754,0
+32,1.975975944762301,0
+64,2.5453740170363433,0
+128,2.2453939663175233,0
+}\GCCGNU
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,0.851635755433383,0
+2,1.0132350727989003,0
+4,0.9903119400820666,0
+8,1.322532975947501,0
+16,1.2399293751457026,0
+32,1.3542268268527857,0
+64,1.0425760841167246,0
+128,1.1301073511295001,0
+}\GCCHPX
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1.388090936276086,0
+2,1.3089410897590565,0
+4,2.658655848518369,0
+8,2.8922746856529837,0
+16,4.338428316835684,0
+32,4.475040855239569,0
+64,4.647385409415836,0
+128,4.822220065332504,0
+}\ICCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,0.2728659738467483,0
+2,0.6657937021895068,0
+4,1.1081505678033348,0
+8,1.0627127952746112,0
+16,1.1505329312352781,0
+32,1.1654707315374937,0
+64,1.2228072717153566,0
+128,1.1571223571691434,0
+}\NVCOMP
+
+% @DATA
+
+\begin{tikzpicture}
+	\begin{axis}[
+			table/col sep=comma,
+			% Dimensions of the plot
+			width=0.45\textwidth,
+			height=0.33\textwidth,
+			% Axis labels
+			xlabel={\#Threads},
+			ylabel={Speedup (vs GCC-SEQ)},
+			% Axis config
+			ymin=0,
+			ymax=5.304442071865754,
+			% log2 x axis
+			xmode=log,
+			log basis x=2,
+			log ticks with fixed point,
+			xtick={1, 2, 4, 8, 16, 32, 64, 128, 256},
+			% Other parameters
+			legend pos=north west,
+			%
+			grid=major,
+			grid style=dotted,
+		]
+
+\addplot+ [color=black, mark options={fill=black!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCSEQ}; \addlegendentry{GCC-SEQ};
+\addplot+ [color=red,  mark options={fill=red!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCTBB}; \addlegendentry{GCC-TBB};
+\addplot+ [color=orange!80!black, mark options={fill=orange!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCGNU}; \addlegendentry{GCC-GNU};
+\addplot+ [color=violet, mark options={fill=violet!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCHPX}; \addlegendentry{GCC-HPX};
+\addplot+ [color=blue, mark options={fill=blue!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\ICCTBB}; \addlegendentry{ICC-TBB};
+\addplot+ [color=green!60!black, mark options={fill=green!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\NVCOMP}; \addlegendentry{NVC-OMP};
+		% @ADDPLOT
+
+		% Ideal speedup
+		\addplot[mark=none, color=black, domain=1:256] {x}; \addlegendentry{Ideal}
+
+		% Dashed line at y=1
+		\draw[dashed] (axis cs:1,1) -- (axis cs:256,1);
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

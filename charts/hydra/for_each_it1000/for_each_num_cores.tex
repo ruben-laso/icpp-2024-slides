@@ -1,0 +1,108 @@
+\documentclass[border=2pt]{standalone}
+
+\usepackage{pgfplots}
+\pgfplotsset{
+	compat=newest,
+	% Opacity 0.5 in the legend
+	every axis legend/.append style={
+		fill=white,
+		fill opacity=0.5,
+		text opacity=1,
+		font = \scriptsize,
+	},
+	every axis plot/.append style={
+		fill opacity=1.0,
+	}
+}
+
+\begin{document}
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,2002720333712.0,0
+}\GCCSEQ
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1970817186599.0,0
+2,985616787200.0,0
+4,492997461068.0,0
+8,246454120079.0,0
+16,123241118382.0,0
+32,61707610420.0,0
+}\GCCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,2003309722857.0,0
+2,986649442399.0,0
+4,493248620649.0,0
+8,246581565477.0,0
+16,123281002993.0,0
+32,61686155939.0,0
+}\GCCGNU
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1973890349253.0,0
+2,986744266279.0,0
+4,493484943034.0,0
+8,246704085874.0,0
+16,123416841178.0,0
+32,61718841213.0,0
+}\GCCHPX
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1972421048337.0,0
+2,986318175978.0,0
+4,493579034295.00006,0
+8,246657333055.0,0
+16,123423735205.00002,0
+32,61709708925.0,0
+}\ICCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1999100626877.0,0
+2,999594212784.0,0
+4,500287504479.0,0
+8,250043548305.0,0
+16,125009736661.0,0
+32,62612292741.00001,0
+}\NVCOMP
+
+% @DATA
+
+\begin{tikzpicture}
+	\begin{axis}[
+			table/col sep=comma,
+			% Dimensions of the plot
+			width=0.45\textwidth,
+			height=0.33\textwidth,
+			% Axis labels
+			xlabel={\#Threads},
+			ylabel={Time (ns)},
+			% Axis config
+			xtick={1, 2, 4, 8, 16, 32},
+			% Other parameters
+			legend style={at={(0.95,0.5)},anchor=east},
+			%
+			grid=major,
+			grid style=dotted,
+		]
+
+\addplot+ [color=black, mark options={fill=black!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCSEQ}; \addlegendentry{GCC-SEQ};
+\addplot+ [color=red,  mark options={fill=red!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCTBB}; \addlegendentry{GCC-TBB};
+\addplot+ [color=orange!80!black, mark options={fill=orange!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCGNU}; \addlegendentry{GCC-GNU};
+\addplot+ [color=violet, mark options={fill=violet!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCHPX}; \addlegendentry{GCC-HPX};
+\addplot+ [color=blue, mark options={fill=blue!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\ICCTBB}; \addlegendentry{ICC-TBB};
+\addplot+ [color=green!60!black, mark options={fill=green!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\NVCOMP}; \addlegendentry{NVC-OMP};
+		% @ADDPLOT
+
+		% add horizontal line with no markers (for sequential)
+		\addplot+ [color=black, no marks, dashed] coordinates {(1, 2002720333712.0) (32, 2002720333712.0)};
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

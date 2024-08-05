@@ -1,0 +1,16 @@
+\begin{table*}[t]
+	\caption{Speedup against GCC's sequential implementation for machines \machhydralong, \machnebulalong, and \machvsclong, with \num{32}, \num{64}, and \num{128} cores, respectively. Notation is \machhydra|\machnebula|\machvsc. Problem size is $2^{30}$. \higherisbetter.}
+	\label{tab:speedup-vs-seq}
+	\begin{tabular}{ccccccc}
+		\toprule
+		        & \groupfind      & \groupforeach        & \groupforeach          & \groupinclscan  & \groupreduce      & \groupsort         \\
+		        &                 & $k_\mathrm{it} = 1 $ & $k_\mathrm{it} = 1000$ &                 &                   &                    \\
+		\midrule
+		GCC-TBB & 8.9 | 5.8 | 4.7 & 14.2 | 6.1 | 8.5     & 32.5 | 54.9 | 102.0    & 4.5 | 3.1 | 4.7 & 10.0 | 5.1 | 6.9  & 9.7 | 9.4 | 10.6   \\
+		GCC-GNU & 8.0 | 3.2 | 2.2 & 15.0 | 7.8 | 9.1     & 32.5 | 54.9 | 106.5    & N/A | N/A | N/A & 11.0 | 4.7 | 6.0  & 25.4 | 26.9 | 66.6 \\
+		GCC-HPX & 6.4 | 1.4 | 1.1 & 7.2 | 1.8 | 1.4      & 32.4 | 43.7 | 84.8     & 3.0 | 0.9 | 1.0 & 7.3 | 0.9 | 1.2   & 10.1 | 8.0 | 8.1   \\
+		ICC-TBB & 9.0 | N/A | 4.8 & 13.9 | N/A | 8.2     & 32.5 | N/A | 106.7     & 4.5 | N/A | 4.7 & 10.2 | N/A | 6.8  & 10.1 | N/A | 9.0   \\
+		NVC-OMP & 6.1 | 1.4 | 1.2 & 22.1 | 15.0 | 13.0   & 32.0 | 54.8 | 106.5    & 0.9 | 0.8 | 0.9 & 11.0 | 4.8 | 11.9 & 7.1 | 6.3 | 6.7    \\
+		\bottomrule
+	\end{tabular}
+\end{table*}

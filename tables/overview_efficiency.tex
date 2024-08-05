@@ -1,0 +1,37 @@
+% \begin{table}[t]
+% 	\caption*{Maximum number of threads such that efficiency is above \qty{70}{\percent} (compared to the seq. execution) for machines \machhydralong, \machnebulalong, and \machvsclong. Notation is \machhydra|\machnebula|\machvsc.  Problem size is $2^{30}$. \higherisbetter.}
+% 	\label{tab:threads-with-good-efficiency}
+% 	\begin{adjustbox}{max width=\textwidth}
+% 	\begin{tabular}{ccccccc}
+% 		\toprule
+% 		        & \groupfind  & \groupforeach        & \groupforeach          & \groupinclscan  & \groupreduce & \groupsort   \\
+% 		        &             & $k_\text{it} = 1 $ & $k_\text{it} = 1000$ &                 &              &              \\
+% 		\midrule
+% 		GCC-TBB & 2 | 1 | 2   & 8 | 4 | 1            & 32 | 64 | 128          & 4 | 1 | 1       & 32 | 8 | 16  & 8 | 8 | 8    \\
+% 		GCC-GNU & 8 | 1 | 1   & 1 | 1 | 1            & 32 | 64 | 128          & N/A | N/A | N/A & 32 | 8 | 16  & 32 | 16 | 32 \\
+% 		GCC-HPX & 16 | 4 | 1  & 16 | 2 | 2           & 32 | 32 | 16           & 4 | 2 | 1       & 8 | 2 | 4    & 4 | 2 | 4    \\
+% 		ICC-TBB & 2 | N/A | 1 & 8 | N/A | 4          & 32 | N/A | 128         & 4 | N/A | 1     & 4 | N/A | 1  & 8 | N/A | 8  \\
+% 		NVC-OMP & 16 | 4 | 4  & 32 | 32 | 16         & 32 | 64 | 128          & 1 | 1 | 1       & 32 | 16 | 32 & 2 | 2 | 2    \\
+% 		\bottomrule
+% 	\end{tabular}
+% 	\end{adjustbox}
+% \end{table}
+
+\begin{table}[t]
+	\caption*{Maximum number of threads such that \textbf{efficiency is above \qty{70}{\percent}} (compared to the seq. execution) for \machvsclong. Problem size is $2^{30}$. \higherisbetter.}
+	\label{tab:threads-with-good-efficiency}
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{tabular}{ccccccc}
+			\toprule
+			        & \groupfind & \groupforeach      & \groupforeach        & \groupinclscan & \groupreduce & \groupsort \\
+			        &            & $k_\text{it} = 1 $ & $k_\text{it} = 1000$ &                &              &            \\
+			\midrule
+			GCC-TBB & 2          & 1                  & 128                  & 1              & 16           & 8          \\
+			GCC-GNU & 1          & 1                  & 128                  & N/A            & 16           & 32         \\
+			GCC-HPX & 1          & 2                  & 16                   & 1              & 4            & 4          \\
+			ICC-TBB & 1          & 4                  & 128                  & 1              & 1            & 8          \\
+			NVC-OMP & 4          & 16                 & 128                  & 1              & 32           & 2          \\
+			\bottomrule
+		\end{tabular}
+	\end{adjustbox}
+\end{table}

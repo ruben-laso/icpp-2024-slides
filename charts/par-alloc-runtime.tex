@@ -1,0 +1,100 @@
+\documentclass[border=2pt]{standalone}
+
+\usepackage{pgfplots}
+\pgfplotsset{
+	compat=newest,
+	% Opacity 0.5 in the legend
+	every axis legend/.append style={
+		fill=white,
+		fill opacity=0.5,
+		text opacity=1,
+	},
+	every axis plot/.append style={
+		fill opacity=1.0,
+	}
+}
+
+\usetikzlibrary{patterns}
+
+\begin{document}
+\thispagestyle{empty}
+
+\pgfplotstableread[col sep=comma]{
+Benchmark,GCC-TBB,GCC-GNU,ICC-TBB,NVC-OMP
+find,0.7676490414025566,1.1982771247317647,1.0548674339535538,0.760191922360036
+foreach1,1.3653439305115231,1.6305420479775758,1.5908611522755818,1.0172675783340162
+foreach1000,1.0000698211014925,0.998523184566791,1.0001057452318631,1.0141663641896184
+inclusivescan,0.0,1.0234603024548954,0.819870860465802,0.805707189322436
+reduce,1.3327147785549864,1.4347585925012987,1.4740992565246007,1.5013032377603066
+sort,0.9578277020607103,0.9992442066772499,1.021543381760628,1.003331183250853
+}\datatable
+
+\begin{tikzpicture}
+	\setstretch{1.0}
+	\begin{axis}[
+			ybar,
+			bar width=5pt,
+			table/col sep=comma,
+			% Dimensions of the plot
+			width=0.60\textwidth,
+			height=0.33\textwidth,
+			% Axis labels
+			xlabel={Algorithm},
+			ylabel={Speedup (vs default allocator)},
+			% Axis config
+			xtick=data,
+			symbolic x coords={find, foreach1, foreach1000, inclusivescan, reduce, sort},
+			xticklabels={
+				\texttt{find},
+				{\texttt{for\_each}\\$k_\mathrm{it} = 1$},
+				{\texttt{for\_each}\\$k_\mathrm{it} = 1000$},
+				\texttt{incl\_scan},
+				\texttt{reduce},
+				\texttt{sort}},
+			xticklabel style={align=center, font=\small},
+			ymin=0,
+			ymax=2,
+			ytick distance={0.2},
+			% Other parameters
+			% legend pos=north west,
+			legend style={at={(0.5,1.05)},anchor=south,legend columns=-1},
+			%
+			grid=major,
+			grid style=dotted,
+			%
+			visualization depends on=rawy\as\YY,
+			nodes near coords={
+				\pgfmathtruncatemacro{\YY}{ifthenelse(\YY==0,0,1)}
+				\ifnum\YY=0
+					{N/A}
+				\else
+					\pgfmathprintnumber{\pgfplotspointmeta}
+				\fi
+			},
+			every node near coord/.append style={
+				rotate=90,
+				anchor=west,
+				font=\footnotesize,
+				color=black,
+				/pgf/number format/.cd,fixed, fixed zerofill,precision=2
+			},
+			% Enlarge limits (so nodes near coords fit)
+			enlarge y limits={upper, value=0.1},
+		]
+
+		% @ADDPLOT
+
+		\addplot+[draw=black, fill=white, pattern color=red, postaction={pattern=north east lines}] table[x=Benchmark, y=GCC-TBB] {\datatable}; \addlegendentry{GCC-TBB};
+		\addplot+[draw=black, fill=white, pattern color=orange!80!white, postaction={pattern=north west lines}] table[x=Benchmark, y=GCC-GNU] {\datatable}; \addlegendentry{GCC-GNU};
+		\addplot+[draw=black, fill=white, pattern color=blue, postaction={pattern=crosshatch}] table[x=Benchmark, y=ICC-TBB] {\datatable}; \addlegendentry{ICC-TBB};
+		\addplot+[draw=black, fill=white, pattern color=green!60!black, postaction={pattern=grid}] table[x=Benchmark, y=NVC-OMP] {\datatable}; \addlegendentry{NVC-OMP};
+
+		% Draw a line through 0
+		\coordinate (A) at (axis cs:find,1);
+		\coordinate (O1) at (rel axis cs:0,0);
+		\coordinate (O2) at (rel axis cs:1,0);
+		\draw[black,dashed,sharp plot] (A -| O1) -- (A -| O2);
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

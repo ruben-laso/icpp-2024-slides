@@ -1,0 +1,32 @@
+\begin{table}[t]
+	\centering
+	\caption*{Binary sizes in \machhydralong and \machteslalong. \lowerisbetter.}
+	\label{tab:binary-sizes}
+	\scriptsize
+	\begin{tabular}{lS[table-number-alignment=right, table-auto-round=true, table-format=1.1]}
+		\toprule
+		Compiler & {Binary size}         \\
+		Backend  & {(\unit{\mebi\byte})} \\
+		\midrule
+		GCC-SEQ  & 2.52                  \\
+		GCC-TBB  & 17.21                 \\
+		GCC-GNU  & 5.31                  \\
+		GCC-HPX  & 61.98                 \\
+		ICC-TBB  & 16.64                 \\
+		NVC-OMP  & 1.81                  \\
+		NVC-CUDA & 7.80                  \\
+		\bottomrule
+	\end{tabular}
+	% \begin{adjustbox}{max width=\linewidth}
+	% 	\begin{tabular}{l*{7}{c}}
+	% 		\toprule
+	% 		Target machine                & \multicolumn{6}{c}{\machhydra}             & \machtesla \\
+	% 		\midrule
+	% 		Compiler                      & GCC  & GCC   & GCC  & GCC   & ICC   & NVC  & NVC        \\
+	% 		Backend                       & SEQ  & TBB   & GNU  & HPX   & TBB   & OMP  & CUDA       \\
+	% 		\midrule
+	% 		Bin. size (\unit{\mebi\byte}) & 2.52 & 17.21 & 5.31 & 61.98 & 16.64 & 1.81 & 7.80       \\
+	% 		\bottomrule
+	% 	\end{tabular}
+	% \end{adjustbox}
+\end{table}

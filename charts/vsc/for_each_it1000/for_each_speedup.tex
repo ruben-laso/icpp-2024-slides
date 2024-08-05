@@ -1,0 +1,167 @@
+\documentclass[border=2pt]{standalone}
+% use sans-serif font by default (like beamer)
+\renewcommand{\familydefault}{\sfdefault}
+% also sans-serif for math
+\usepackage{sansmath}
+\sansmath
+
+\usepackage{pgfplots}
+\pgfplotsset{
+	compat=newest,
+	% Opacity 0.5 in the legend
+	every axis legend/.append style={
+		fill=white,
+		fill opacity=0.5,
+		text opacity=1,
+		font = \scriptsize,
+	},
+	every axis plot/.append style={
+		fill opacity=1.0,
+	}
+}
+
+% Look for ourmacros-private.sty in the same directory, or the parent
+\makeatletter
+\usepackage{xspace}
+\IfFileExists{ourmacros-private.sty}{ % Then
+	\input{ourmacros-private.sty}
+}{ % Else
+	\IfFileExists{../../../ourmacros-private.sty}{ % Then
+		\input{../../../ourmacros-private.sty}
+	}{ % Else
+\newcommand{\machhydra}{\emph{Hydra}\xspace}
+\newcommand{\machnebula}{\emph{Nebula}\xspace}
+\newcommand{\machvsc}{\mbox{\emph{VSC-5}}\xspace}
+\newcommand{\machtesla}{\mbox{\emph{Tesla}}\xspace}
+\newcommand{\machampere}{\mbox{\emph{Ampere}}\xspace}
+\newcommand{\machhydralong}{\emph{Hydra} (Skylake)\xspace}
+\newcommand{\machnebulalong}{\emph{Nebula} (Zen~1)\xspace}
+\newcommand{\machvsclong}{\mbox{\emph{VSC-5} (Zen~3)}\xspace}
+\newcommand{\machteslalong}{\mbox{\emph{Tesla}}\xspace}
+\newcommand{\machamperelong}{\mbox{\emph{Ampere}}\xspace}
+
+% \newcommand{\machhydra}{\emph{Mach~A}\xspace}
+% \newcommand{\machnebula}{\emph{Mach~B}\xspace}
+% \newcommand{\machvsc}{\mbox{\emph{Mach~C}}\xspace}
+% \newcommand{\machtesla}{\mbox{\emph{Mach~D}}\xspace}
+% \newcommand{\machampere}{\mbox{\emph{Mach~E}}\xspace}
+% \newcommand{\machhydralong}{\emph{Mach~A} (Skylake)\xspace}
+% \newcommand{\machnebulalong}{\emph{Mach~B} (Zen~1)\xspace}
+% \newcommand{\machvsclong}{\mbox{\emph{Mach~C}} (Zen~3)\xspace}
+% \newcommand{\machteslalong}{\mbox{\emph{Mach~D}} (Tesla)\xspace}
+% \newcommand{\machamperelong}{\mbox{\emph{Mach~E}} (Ampere)\xspace}
+}}
+\makeatother
+
+\begin{document}
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1.0,0
+}\GCCSEQ
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,0.9822581208497837,0
+2,1.268629709290826,0
+4,3.929236034178385,0
+8,7.852609276327284,0
+16,15.34105088312899,0
+32,26.30025224850121,0
+64,52.551310289096556,0
+128,102.02824017874913,0
+}\GCCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1.0000515973889794,0
+2,1.94767623679752,0
+4,3.9957411696888787,0
+8,7.986639051919178,0
+16,15.871795036999634,0
+32,26.739930000987954,0
+64,53.42559468119775,0
+128,106.50363971552567,0
+}\GCCGNU
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,0.983222126620431,0
+2,1.9805901340500527,0
+4,3.961026540008508,0
+8,7.548278604233365,0
+16,13.25144209114264,0
+32,21.287617946835894,0
+64,42.45820528129675,0
+128,84.82490610272417,0
+}\GCCHPX
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1.0008439902202058,0
+2,1.9352413584891397,0
+4,3.9984873616719705,0
+8,7.990962963380613,0
+16,15.677835282812085,0
+32,26.72553655048807,0
+64,53.457508671487254,0
+128,106.73466184094664,0
+}\ICCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+1,1.000448785119069,0
+2,1.9473593489712033,0
+4,3.9960272302472855,0
+8,7.986086198225041,0
+16,15.735929749293257,0
+32,26.71986456322427,0
+64,53.45967210645565,0
+128,106.53966739975174,0
+}\NVCOMP
+
+% @DATA
+
+\begin{tikzpicture}
+	\begin{axis}[
+			table/col sep=comma,
+			% Dimensions of the plot
+			width=0.75\textwidth,
+			height=0.6\textwidth,
+			% Axis labels
+			xlabel={\#Threads},
+			ylabel={Speedup (vs GCC-SEQ)},
+			% Axis config
+			ymin=0,
+			ymax=117.40812802504132,
+			% log2 x axis
+			xmode=log,
+			log basis x=2,
+			log ticks with fixed point,
+			xtick={1, 2, 4, 8, 16, 32, 64, 128},
+			% Other parameters
+			legend pos=north west,
+			%
+			grid=major,
+			grid style=dotted,
+			%
+			title={High computational intensity ($k_\text{it} = 1000$)},
+		]
+
+\addplot+ [color=black, mark options={fill=black!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCSEQ}; \addlegendentry{GCC-SEQ};
+\addplot+ [color=red,  mark options={fill=red!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCTBB}; \addlegendentry{GCC-TBB};
+\addplot+ [color=orange!80!black, mark options={fill=orange!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCGNU}; \addlegendentry{GCC-GNU};
+\addplot+ [color=violet, mark options={fill=violet!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCHPX}; \addlegendentry{GCC-HPX};
+\addplot+ [color=blue, mark options={fill=blue!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\ICCTBB}; \addlegendentry{ICC-TBB};
+\addplot+ [color=green!60!black, mark options={fill=green!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\NVCOMP}; \addlegendentry{NVC-OMP};
+		% @ADDPLOT
+
+		% Ideal speedup
+		\addplot[mark=none, color=black, domain=1:128] {x}; \addlegendentry{Ideal}
+
+		% Dashed line at y=1
+		\draw[dashed] (axis cs:1,1) -- (axis cs:128,1);
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,246 @@
+\documentclass[border=2pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{
+	compat=newest,
+	% Opacity 0.5 in the legend
+	every axis legend/.append style={
+		fill=white,
+		fill opacity=0.5,
+		text opacity=1,
+		font = \scriptsize,
+	},
+	every axis plot/.append style={
+		fill opacity=1.0,
+	}
+}
+
+% Look for ourmacros-private.sty in the same directory, or the parent
+\makeatletter
+\usepackage{xspace}
+\IfFileExists{ourmacros-private.sty}{ % Then
+	\input{ourmacros-private.sty}
+}{ % Else
+	\IfFileExists{../../../ourmacros-private.sty}{ % Then
+		\input{../../../ourmacros-private.sty}
+	}{ % Else
+% \newcommand{\machhydra}{\emph{Hydra}\xspace}
+% \newcommand{\machnebula}{\emph{Nebula}\xspace}
+% \newcommand{\machvsc}{\mbox{\emph{VSC-5}}\xspace}
+% \newcommand{\machtesla}{\mbox{\emph{Tesla}}\xspace}
+% \newcommand{\machampere}{\mbox{\emph{Ampere}}\xspace}
+% \newcommand{\machhydralong}{\emph{Hydra} (Skylake)\xspace}
+% \newcommand{\machnebulalong}{\emph{Nebula} (Zen~1)\xspace}
+% \newcommand{\machvsclong}{\mbox{\emph{VSC-5} (Zen~3)}\xspace}
+% \newcommand{\machteslalong}{\mbox{\emph{Tesla}}\xspace}
+% \newcommand{\machamperelong}{\mbox{\emph{Ampere}}\xspace}
+
+\newcommand{\machhydra}{\emph{Mach~A}\xspace}
+\newcommand{\machnebula}{\emph{Mach~B}\xspace}
+\newcommand{\machvsc}{\mbox{\emph{Mach~C}}\xspace}
+\newcommand{\machtesla}{\mbox{\emph{Mach~D}}\xspace}
+\newcommand{\machampere}{\mbox{\emph{Mach~E}}\xspace}
+\newcommand{\machhydralong}{\emph{Mach~A} (Skylake)\xspace}
+\newcommand{\machnebulalong}{\emph{Mach~B} (Zen~1)\xspace}
+\newcommand{\machvsclong}{\mbox{\emph{Mach~C}} (Zen~3)\xspace}
+\newcommand{\machteslalong}{\mbox{\emph{Mach~D}} (Tesla)\xspace}
+\newcommand{\machamperelong}{\mbox{\emph{Mach~E}} (Ampere)\xspace}
+}}
+\makeatother
+
+\begin{document}
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,7996.889953951822,0
+16,15946.10295203202,0
+32,31742.82085396372,0
+64,63433.92196386748,0
+128,126861.72073808203,0
+256,254297.7156791964,0
+512,508374.2190097694,0
+1024,1014164.7045454409,0
+2048,2032738.313583815,0
+4096,4064691.200581396,0
+8192,8135292.676300585,0
+16384,16267760.114942525,0
+32768,32454373.395348843,0
+65536,64895925.95238096,0
+131072,130137824.45454544,0
+262144,259725211.0,0
+524288,520147832.6666668,0
+1048576,1044636274.0,0
+2097152,2085011224.0,0
+4194304,4162146135.000001,0
+8388608,8325574448.999999,0
+16777216,16657454688.000002,0
+33554432,33315418319.000004,0
+67108864,66620275146.0,0
+134217728,133217450104.0,0
+268435456,266462131402.0,0
+536870912,532985511194.0,0
+1073741824,1065823037042.0,0
+}\GCCSEQ
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,15461.43124235351,0
+16,19836.49844533099,0
+32,23724.657436385733,0
+64,26427.981914833174,0
+128,31245.51255277055,0
+256,39481.94741746894,0
+512,47651.56413139803,0
+1024,61586.65106775623,0
+2048,86275.26742681029,0
+4096,130598.64324223784,0
+8192,213190.43733899025,0
+16384,368006.3746056779,0
+32768,672327.201248799,0
+65536,1273909.3330300264,0
+131072,2467427.021164022,0
+262144,4845329.183390998,0
+524288,9589926.910344828,0
+1048576,19267313.31506849,0
+2097152,38053046.08333334,0
+4194304,75978756.66666667,0
+8388608,152264290.2222222,0
+16777216,304038635.6,0
+33554432,607519591.0,0
+67108864,1215050293.0,0
+134217728,2432727407.0,0
+268435456,4856498309.0,0
+536870912,9703206529.0,0
+1073741824,19429649993.0,0
+}\GCCTBB
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,7943.686370174248,0
+16,15813.0949907754,0
+32,31557.826336079677,0
+64,63050.529594747946,0
+128,126095.6856214492,0
+256,251991.73112272585,0
+512,503960.200936257,0
+1024,172361.56296058907,0
+2048,123473.69378357683,0
+4096,188261.9545236958,0
+8192,219939.62621511432,0
+16384,392353.6364692223,0
+32768,689579.676695319,0
+65536,1265508.2694063943,0
+131072,3777622.2648648648,0
+262144,4835406.137681159,0
+524288,11015670.52083334,0
+1048576,19236375.983050853,0
+2097152,38098361.86486488,0
+4194304,77190384.8888889,0
+8388608,152615151.7777778,0
+16777216,303938019.2,0
+33554432,621035661.0000001,0
+67108864,1234991753.0,0
+134217728,2466197133.0,0
+268435456,4936001803.0,0
+536870912,9808657014.0,0
+1073741824,19422132685.0,0
+}\GCCGNU
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,42439.49896834321,0
+16,50062.678525809824,0
+32,60088.75724684511,0
+64,93904.29948881798,0
+128,129034.59227379778,0
+256,191711.38247338307,0
+512,196400.57693932072,0
+1024,204252.416714948,0
+2048,215060.72453416148,0
+4096,266545.4128501934,0
+8192,306880.78029642487,0
+16384,491343.9342546061,0
+32768,884410.7804576365,0
+65536,1613264.7781609194,0
+131072,3084583.251101321,0
+262144,6006304.969827587,0
+524288,11929469.779661017,0
+1048576,23755245.44067796,0
+2097152,47471674.83333333,0
+4194304,94926822.13333334,0
+8388608,190070394.85714287,0
+16777216,380388050.5,0
+33554432,760687104.5,0
+67108864,1529351989.0,0
+134217728,3054140482.0,0
+268435456,6135535559.0,0
+536870912,12227227274.0,0
+1073741824,24363982111.0,0
+}\GCCHPX
+
+\pgfplotstableread[col sep=comma]{
+X,Y,Yerror
+8,11608.778591625549,0
+16,12190.515983850784,0
+32,12425.072502747977,0
+64,13142.661920214803,0
+128,13409.602402250695,0
+256,15692.070626464414,0
+512,19685.509974820885,0
+1024,29314.820801896672,0
+2048,48545.83208426861,0
+4096,85684.21923100488,0
+8192,159635.51255589945,0
+16384,309033.2362309223,0
+32768,612426.9126297582,0
+65536,1202191.771404111,0
+131072,2391836.6116838483,0
+262144,4770614.180272111,0
+524288,9529821.972789124,0
+1048576,19165271.095890403,0
+2097152,38061326.76470588,0
+4194304,76098952.27777778,0
+8388608,152243459.8888889,0
+16777216,304353340.6,0
+33554432,608218792.0000001,0
+67108864,1223886060.0,0
+134217728,2431434620.0,0
+268435456,4866929436.0,0
+536870912,9727267378.0,0
+1073741824,19450342118.0,0
+}\NVCOMP
+
+% @DATA
+
+\begin{tikzpicture}
+	\begin{axis}[
+			table/col sep=comma,
+			% Dimensions of the plot
+			width=0.45\textwidth,
+			height=0.33\textwidth,
+			% Axis labels
+			xlabel={Problem size (\#elements)},
+			ylabel={Time (ns)},
+			% Logarithmic scale (base 10 for y axis)
+			ymode=log,
+			log basis y=10,
+			% Logarithmic scale (base 2 for x axis)
+			xmode=log,
+			log basis x=2,
+			% Other parameters
+			legend pos=north west,
+			grid=major,
+			grid style=dotted,
+			%
+			title={\machnebulalong},
+		]
+
+\addplot+ [color=black, mark options={fill=black!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCSEQ}; \addlegendentry{GCC-SEQ};
+\addplot+ [color=red,  mark options={fill=red!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCTBB}; \addlegendentry{GCC-TBB};
+\addplot+ [color=orange!80!black, mark options={fill=orange!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCGNU}; \addlegendentry{GCC-GNU};
+\addplot+ [color=violet, mark options={fill=violet!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\GCCHPX}; \addlegendentry{GCC-HPX};
+\addplot+ [color=green!60!black, mark options={fill=green!60!white}, solid] table[x=X, y=Y, y error=Yerror] {\NVCOMP}; \addlegendentry{NVC-OMP};
+		% @ADDPLOT
+
+	\end{axis}
+\end{tikzpicture}
+\end{document}

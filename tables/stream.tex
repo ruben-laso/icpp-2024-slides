@@ -1,0 +1,69 @@
+\begin{table}
+	\centering
+	\caption{Reported bandwidth (in MB/s) by STREAM benchmark on different systems.}
+	\label{tab:stream}
+	% \begin{tabular}{lrrrrrr}
+	% \toprule
+	% Function & \multicolumn{2}{c}{\machhydralong} & \multicolumn{2}{c}{\machnebulalong} & \multicolumn{2}{c}{\machvsclong} \\
+	%          & 1 thread & 32 threads & 1 thread & 64 threads & 1 thread & 128 threads \\
+	% \midrule
+	% Copy     & 9770.2   & 135202.1   & 26080.6  & 204281.4   & 42588.7  & 248803.1   \\
+	% Scale    & 11049.1  & 110569.5   & 13090.3  & 134685.1   & 22811.6  & 201700.8   \\
+	% Add      & 11499.3  & 124752.2   & 12077.0  & 152728.9   & 25874.3  & 226621.4   \\
+	% Triad    & 11687.5  & 125319.3   & 12536.5  & 145880.5   & 25482.6  & 227558.0   \\
+	% \end{tabular}
+	\begin{tabular}{lrrrrr}
+		\toprule
+		System                       & Threads & Copy     & Scale    & Add      & Triad    \\
+		\midrule
+		\multirow{2}{*}{\machhydra}  & 1       & 9770.2   & 11049.1  & 11499.3  & 11687.5  \\
+		                             & 32      & 135202.1 & 110569.5 & 124752.2 & 125319.3 \\
+		\midrule
+		\multirow{2}{*}{\machnebula} & 1       & 26080.6  & 13090.3  & 12077.0  & 12536.5  \\
+		                             & 64      & 204281.4 & 134685.1 & 152728.9 & 145880.5 \\
+		\midrule
+		\multirow{2}{*}{\machvsc}    & 1       & 42588.7  & 22811.6  & 25874.3  & 25482.6  \\
+		                             & 128     & 248803.1 & 201700.8 & 226621.4 & 227558.0 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+% Hydra 1 thread
+% Copy:            9770.2     1.764243     1.758393     1.772533
+% Scale:          11049.1     1.559605     1.554868     1.565754
+% Add:            11499.3     2.244428     2.240987     2.256726
+% Triad:          11687.5     2.210812     2.204894     2.215791
+
+% Hydra 32 threads
+% Copy:          135202.1     0.129144     0.127068     0.131370
+% Scale:         110569.5     0.156243     0.155376     0.157252
+% Add:           124752.2     0.207381     0.206568     0.208159
+% Triad:         125319.3     0.207318     0.205633     0.208760
+
+
+% Nebula 1 thread
+% Function    Best Rate MB/s  Avg time     Min time     Max time
+% Copy:           26080.6     0.659743     0.658721     0.661000
+% Scale:          13090.3     1.336562     1.312414     1.385529
+% Add:            12077.0     2.134970     2.133791     2.135963
+% Triad:          12536.5     2.069114     2.055579     2.076623
+
+% Nebula 64 threads
+% Function    Best Rate MB/s  Avg time     Min time     Max time
+% Copy:          204281.4     0.095978     0.084099     0.107685
+% Scale:         134685.1     0.135044     0.127556     0.146949
+% Add:           152728.9     0.190110     0.168729     0.233868
+% Triad:         145880.5     0.196305     0.176650     0.236431
+
+% VSC 1 thread
+% Copy:           42588.7     0.403629     0.403390     0.403876
+% Scale:          22811.6     0.753505     0.753120     0.753995
+% Add:            25874.3     0.996363     0.995961     0.996643
+% Triad:          25482.6     1.011606     1.011269     1.012271
+
+% VSC 128 threads
+% Copy:          248803.1     0.069623     0.069050     0.070172
+% Scale:         201700.8     0.086066     0.085175     0.087076
+% Add:           226621.4     0.114741     0.113713     0.116042
+% Triad:         227558.0     0.114253     0.113245     0.115570

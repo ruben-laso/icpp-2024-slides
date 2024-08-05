@@ -1,0 +1,312 @@
+% Use LuaLaTeX to compile
+\documentclass[aspectratio=169]{beamer}
+\usetheme{metropolis}
+\metroset{sectionpage=none}
+\metroset{progressbar=frametitle}
+\metroset{block=fill}
+
+% Declare environment blockitem
+\newenvironment{blockitem}[1]{\begin{block}{#1}\begin{itemize}}{\end{itemize}\end{block}}
+\newenvironment{blockenum}[1]{\begin{block}{#1}\begin{enumerate}}{\end{enumerate}\end{block}}
+
+% Macro for fragile frames
+\newenvironment{xframe}[1][]%
+	{\begin{frame}[fragile, environment=xframe, #1]{\secname}}%
+	{\end{frame}}
+
+% Declare command TODO: text in red
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{positioning,shapes.geometric}
+\usetikzlibrary{
+arrows,
+decorations.pathreplacing,
+graphs,
+graphs.standard,
+patterns,
+positioning,
+shapes.geometric
+}
+
+\usepackage{graphicx}
+\usepackage[mode=buildnew]{standalone}
+\usepackage{pdfpages}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\usepackage{xspace}
+
+\usepackage{adjustbox}
+
+\usepackage{ourmacros-private}
+
+\usepackage{pgfplots}
+
+\usepackage{adjustbox}
+
+\usepackage{caption}
+
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{color, colortbl}
+\definecolor{lgreen}{rgb}{0.7, 1, 0.7}
+\definecolor{lred}{rgb}{1, 0.7, 0.7}
+\definecolor{lyellow}{rgb}{1, 1, 0.7}
+
+\usepackage{mdframed}
+
+\usepackage{minted}
+\setminted{fontsize=\scriptsize, breaklines=true, breakanywhere=true, breakautoindent=true, breakafter={.,}, breakaftersymbolpre={\ }, breakaftersymbolpost={\ },
+	escapeinside=||,
+	autogobble=true,
+	linenos=false,
+	tabsize=2,
+	% frame=lines,
+	% framesep=2mm,
+	% rulecolor=\color{black!30},
+	% bgcolor=gray!5,
+}
+\BeforeBeginEnvironment{minted}{\begin{mdframed}}
+\AfterEndEnvironment{minted}{\end{mdframed}}
+
+\usepackage{newverbs}
+\newverbcommand{\cverb}{\color{blue}}{}
+
+\newcommand{\colorref}[3][blue]{\href{#2}{\texttt{\textcolor{#1}{#3}}}}
+
+\usepackage{siunitx}
+\sisetup{per-mode=symbol}
+\DeclareSIUnit{\FLOP}{FLOP}
+\DeclareSIUnit{\empty}{{}}
+
+\usepackage[%
+	backend=biber,
+	style=verbose,
+	autocite=footnote,
+	]
+	{biblatex}
+\addbibresource{references.bib}
+
+\title{What You Always Wanted To Know About \langcpp Performance Portability (But Were Afraid to Do)}
+\subtitle{Austrian-Slovenian HPC Meeting 2024 --- ASHPC24}
+\date{June 12, 2024}
+\author{%
+	Ruben Laso, Diego Krupitza, and Sascha Hunold \\
+	\texttt{\{\href{mailto:laso@par.tuwien.ac.at}{laso}, \href{mailto:krupitza@par.tuwien.ac.at}{krupitza}, \href{mailto:hunold@par.tuwien.ac.at}{hunold}\}@par.tuwien.ac.at}
+}
+\institute{Research Group for Parallel Computing, TU Wien}
+
+\begin{document}
+
+% Insert TU Wien and research group logos in the title slide
+% \titlegraphic{
+% 	\vspace{-10pt}
+% 	\includegraphics[height=20pt]{images/Par_logo}
+% 	\hspace{5pt}
+% 	\includegraphics[height=20pt]{images/TU_Logo}
+% }
+
+% \maketitle
+
+\begin{frame}
+	\titlepage
+	\begin{tikzpicture}[overlay, remember picture]
+		\node[above right=.5cm and .8cm of current page.south west] {\includegraphics[height=20pt,clip]{images/Par_logo.pdf}};
+		\node[above right=.5cm and 1.8cm of current page.south west] {\includegraphics[height=20pt]{images/TU_Logo.pdf}};
+	\end{tikzpicture}
+\end{frame}
+
+
+\section*{\langcpp STL in HPC}
+\begin{xframe}
+	\begin{blockitem}{\langcpp in High-Performance Computing}
+		\item Languages like C, \langcpp and Fortran are the most used in HPC
+		\begin{itemize}
+			\item Existing code base
+			\item Performance
+			\item Compatibility with new hardware
+		\end{itemize}
+		\item \langcpp can be used in several types of architectures
+		\begin{itemize}
+			\item Multi-core and many-core CPUs $\rightarrow$ OpenMP, TBB
+			\item GPUs $\rightarrow$ CUDA, OpenCL
+			\item FPGAs $\rightarrow$ SYCL
+		\end{itemize}
+		\item Should we use a different code for each system?
+	\end{blockitem}
+\end{xframe}
+
+\begin{xframe}
+	\begin{block}{Performance Portability}
+		Same code performs ``well'' on different architectures
+	\end{block}
+	\begin{blockitem}{Performance Portability in \langcpp}
+		\item Several libraries: Kokkos, RAJA, HPX, \dots
+		\item \textbf{\langcppsvtn} with \textbf{execution policies}
+		\begin{itemize}
+			\item Parallel execution of the algorithms in STL (standard library)
+			\item Different compilers/backends
+		\end{itemize}
+	\end{blockitem}
+\end{xframe}
+
+\begin{xframe}
+	\begin{blockitem}{Questions}
+		\item \textbf{Speedup and efficiency} of parallel STL algorithms?
+		\item Which is the \textbf{best compiler/backend}? GCC vs ICC, TBB vs OpenMP, \dots
+		\item \textbf{GPUs} performance?
+	\end{blockitem}
+	\begin{blockitem}{Contributions}
+		\item \pstlbench: micro-benchmark suite
+		\item Evaluation of the performance for
+		\begin{itemize}
+			\item Different compilers: GCC, ICC, NVIDIA HPC SDK
+			\item Different backends: OpenMP, TBB, HPX, CUDA
+			\item Different systems: Intel and AMD CPUs, NVIDIA GPUs
+		\end{itemize}
+	\end{blockitem}
+\end{xframe}
+
+\section*{pSTL-Bench}
+
+\begin{xframe}
+	\begin{blockitem}{pSTL-Bench}
+		\item Code available on \colorref{https://github.com/parlab-tuwien/pSTL-Bench}{github.com/parlab-tuwien/pSTL-Bench}
+		\item Suite of \textbf{micro-benchmarks} to test performance portability in \langcpp
+		\begin{itemize}
+			\item STL algorithms: \verb|std::for_each|, \verb|std::reduce|, \verb|std::sort|, \dots
+		\end{itemize}
+		\item Features:
+		\begin{itemize}
+			\item Number of threads: with \verb|OMP_NUM_THREADS| or \verb|--hpx::threads=N|
+			\item HW Perf. Counters: PAPI's HL or Likwid's Marker APIs
+			\item Different (customizable) input sizes and data types
+			\item Custom NUMA allocator
+		\end{itemize}
+	\end{blockitem}
+\end{xframe}
+
+\section*{Experiments}
+
+\begin{xframe}
+	\begin{blockitem}{Variables}
+		\item Input sizes: $2^{3}$ to $2^{30}$ elements $\rightarrow$ 64B to 8GB
+		\item Data type: \verb|double| and \verb|float|
+		\item \pstlbench's NUMA allocator
+		\item No control of thread and memory placement
+	\end{blockitem}
+	\begin{blockitem}{Contenders}
+		\item Compilers: GCC, ICC, NVIDIA HPC SDK
+		\item Backends: GNU (OpenMP), TBB, HPX, Thrust (OMP), CUDA
+	\end{blockitem}
+\end{xframe}
+
+\begin{xframe}
+	\input{tables/hardware_software.tex}
+\end{xframe}
+
+\section*{Results}
+
+\begin{frame}{Results - Execution time scaling}
+	\begin{figure}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\includestandalone[width=\textwidth]{charts/vsc/for_each_it1/for_each_problem_size}
+			\column{0.5\textwidth}
+			\includestandalone[width=\textwidth]{charts/vsc/for_each_it1000/for_each_problem_size}
+		\end{columns}
+		\caption*{\textbf{Execution time scaling} of \texttt{for\_each} in \machvsclong. Data type: \texttt{double}. \textbf{All cores} are used except for GCC-SEQ. Lower is better.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Results - Speedup}
+	\begin{figure}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\includestandalone[width=\textwidth]{charts/vsc/for_each_it1/for_each_speedup}
+			\column{0.5\textwidth}
+			\includestandalone[width=\textwidth]{charts/vsc/for_each_it1000/for_each_speedup}
+		\end{columns}
+		\caption*{\textbf{Strong scaling} of \texttt{for\_each} with $2^{30}$ \texttt{double}s in \machvsclong. Higher is better.}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Results - GPUs}
+	\begin{figure}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\includestandalone[width=\textwidth]{charts/hydra-gpus/reduce/reduce_problem_size_transfer}
+			\column{0.5\textwidth}
+			\includestandalone[width=\textwidth]{charts/hydra-gpus/reduce/reduce_problem_size_no_transfer}
+		\end{columns}
+		\caption*{\textbf{Execution time scaling} of \texttt{reduce}. Data type: \texttt{float}. \textbf{All cores} are used except for GCC-SEQ. Lower is better.}
+	\end{figure}
+\end{frame}
+
+\section*{Get your hands on it}
+
+\begin{xframe}
+	\begin{columns}[t]
+		\column{0.55\textwidth}
+		\begin{blockitem}{Code and papers}
+			\small
+			\item \pstlbench: \colorref{https://github.com/parlab-tuwien/pSTL-Bench}{github.com/parlab-tuwien/pSTL-Bench}
+			\item arXiv preprint: \colorref{https://arxiv.org/abs/2402.06384}{https://arxiv.org/abs/2402.06384}
+			\item ICPP 2024 paper: incoming
+		\end{blockitem}
+		\column{0.45\textwidth}
+		\par{}
+		\fbox{\includegraphics[page=1, width=0.85\textwidth, trim=40 50 40 50]{images/pstl_bench_main.pdf}}
+	\end{columns}
+\end{xframe}
+
+% Show again the cover title
+% \maketitle
+
+\begin{frame}
+	\titlepage
+	\begin{tikzpicture}[overlay, remember picture]
+		\node[above right=.5cm and .8cm of current page.south west] {\includegraphics[height=20pt,clip]{images/Par_logo.pdf}};
+		\node[above right=.5cm and 1.8cm of current page.south west] {\includegraphics[height=20pt]{images/TU_Logo.pdf}};
+	\end{tikzpicture}
+\end{frame}
+
+
+\section*{Additional content}
+
+
+\begin{xframe}
+	\input{tables/overview_efficiency.tex}
+\end{xframe}
+
+
+\begin{xframe}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\input{tables/hw_counters_foreach_it1.tex}
+		\column{0.5\textwidth}
+		\input{tables/binary_sizes.tex}
+	\end{columns}
+\end{xframe}
+
+
+\begin{xframe}
+	\begin{figure}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\includestandalone[width=\textwidth]{charts/hydra-gpus/for_each/for_each_it1_float_problem_size}
+			\column{0.5\textwidth}
+			\includestandalone[width=\textwidth]{charts/hydra-gpus/for_each/for_each_it1000_float_problem_size}
+		\end{columns}
+		\caption*{\textbf{Execution time scaling} of \texttt{for\_each}. Data type: \texttt{float}. All cores are used except for GCC-SEQ. Lower is better.}
+	\end{figure}
+\end{xframe}
+
+
+
+\end{document}
